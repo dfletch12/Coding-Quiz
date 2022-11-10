@@ -1,240 +1,138 @@
-
-/* header {
-    text-align: center;
-    font-size: larger;
-    padding: 20px;
-    padding-top: 0px;
-    color:white
-  }
-  
-  body {
-    font-family: sans-serif;
-    background-color: hsl(145, 9%, 26%);
-  }
-
-  input {
-    display:none
-  }
-
-.card {
-    background-color: hsl(0, 0%, 100%);
-    border-radius: 5px;
-    border-width: 1px;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px 0px;
-    color: hsl(206, 17%, 28%);
-    font-size: 18px;
-    margin: 0 auto;
-    max-width: 800px;
-    padding: 30px 40px;
-
-  }
-  
-  .card-header::after {
-    content: " ";
-    display: block;
-    width: 100%;
-    background: #e7e9eb;
-    height: 2px;
-  }
-  
-  .card-body {
-    min-height: 100px;
-    
-  }
-  
-  .card-footer {
-    text-align: center;
-  }
-  
-  .card-footer::before {
-    content: " ";
-    display: block;
-    width: 100%;
-    background: #e7e9eb;
-    height: 2px;
-  }
-  
-  .card-footer::after {
-    content: " ";
-    display: block;
-    clear: both;
-  }
-  
-  .btn {
-    border: none;
-    background-color: hsl(360, 91%, 36%);
-    border-radius: 25px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 6px 0px rgba(0, 0, 0, 0.2) 0px 1px 1px
-      0px;
-    color: hsl(0, 0%, 100%);
-    display: inline-block;
-    font-size: 22px;
-    line-height: 22px;
-    margin: 16px 16px 16px 20px;
-    padding: 14px 34px;
-    text-align: center;
-    cursor: pointer;
-    
-  }
-  .btn:hover {
-    background-color: hsl(206, 75%, 36%);
-  }
-  .btn:active {
-    background-color: black;
-  }
-  
-  .option {
-    display: flex;
-  }
-  
-  button[disabled] {
-    cursor: default;
-    background: #c0c7cf;
-  }
-  
-  
-  .hide{
-    display: none;
-  }
-
-#opt1, #opt2, #opt3, #opt4 {
-    width: 250px;
-    font-size: 20px;
-    background-color: #778897;
-    height: 30px;
-    border-radius: 50px;
-    text-align: center;
-    border: 1px solid red;
-    margin: 10px 40px 10px 0px
+body{
+  font: 300 20px 'Work Sans', sans-serif;
+  color: #333;
+  text-align: center;
+  background-color: #f8f6f0;
 }
 
-  #question {
-    width: 100px;
-    height: 20px;
-    display: flex;
-    flex-wrap: wrap;
-  }
+
+h1{
+  font-weight: 300;
+  margin: 0px;
+  padding: 10px;
+  font-size: 20px;
+  background-color: #444;
+  color: #fff;
+}
+
+
+#highScore {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+#highScore td, #highScore th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#highScore tr:nth-child(even){background-color: #f2f2f2;}
+
+#highScore tr:hover {background-color: #ddd;}
+
+#highScore th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+.btn {
+  border: none;
+  background-color: hsl(360, 91%, 36%);
+  border-radius: 25px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 6px 0px, rgba(0, 0, 0, 0.2) 0px 1px 1px 0px;
+  color: hsl(0, 0%, 100%);
+  display: inline-block;
+  font-size: 22px;
+  line-height: 22px;
+  margin: 16px 16px 16px 20px;
+  padding: 14px 34px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.hide{
+  display: none;
+}
+
+.question{
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.answers {
+  text-align: left;
+  display: inline-block;
+  width: 250px;
+  font-size: 20px;
+  height: 30px;
+  border-radius: 50px;
+  text-align: center;
+  margin: 10px 40px 10px 0px;
+}
+
+.answers label{
+  display: block;
+  margin-bottom: 10px;
+}
+
+button{
+  font: bold 22px 'Work Sans', sans-serif;
+  background-color: #279;
+  color: #fff;
+  border: 0px;
+  border-radius: 3px;
+  padding: 20px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+button:hover{
+  background-color: #38a;
+}
   
-  #settings.btn:active {
-    width: 500px;
-    height: 500px;
-    background-color:black;
-  }*/
-
-
+.float-right {
+  float: right;
+}
   
-  @import url(https://fonts.googleapis.com/css?family=Work+Sans:300,600);
+.slide{
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  z-index: 1;
+  display: none;
+}
 
-  body{
-    font-size: 20px;
-    font-family: 'Work Sans', sans-serif;
-    color: #333;
-    font-weight: 300;
-    text-align: center;
-    background-color: #f8f6f0;
-  }
-  h1{
-    font-weight: 300;
-    margin: 0px;
-    padding: 10px;
-    font-size: 20px;
-    background-color: #444;
-    color: #fff;
-  }
+.active-slide{
+  opacity: 1;
+  z-index: 2;
+}
 
+.quiz-container{
+  position: relative;
+  height: 200px;
+  margin-top: 40px;
+}
+#password {
+  font-size: 1rem;
+}
+
+@media (max-width: 690px) {
   .btn {
-    border: none;
-    background-color: hsl(360, 91%, 36%);
-    border-radius: 25px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 6px 0px rgba(0, 0, 0, 0.2) 0px 1px 1px
-      0px;
-    color: hsl(0, 0%, 100%);
-    display: inline-block;
-    font-size: 22px;
-    line-height: 22px;
-    margin: 16px 16px 16px 20px;
-    padding: 14px 34px;
-    text-align: center;
-    cursor: pointer;
+    font-size: 1rem;
+    margin: 16px 0px 0px 0px;
+    padding: 10px 15px;
   }
+}
 
-  .hide{
-    display: none;
+@media (max-width: 500px) {
+  .btn {
+    font-size: 0.8rem;
   }
-  .question{
-    font-size: 30px;
-    margin-bottom: 10px;
-  }
-  .answers {
-    margin-bottom: 20px;
-    text-align: left;
-    display: inline-block; 
-     width: 250px;
-    font-size: 20px;
-    background-color: #778897;
-    height: 30px;
-    border-radius: 50px;
-    text-align: center;
-    border: 1px solid red;
-    margin: 10px 40px 10px 0px
-
-  }
-  .answers label{
-    display: block;
-    margin-bottom: 10px;
-  }
-  button{
-    font-family: 'Work Sans', sans-serif;
-    font-size: 22px;
-    background-color: #279;
-    color: #fff;
-    border: 0px;
-    border-radius: 3px;
-    padding: 20px;
-    cursor: pointer;
-    margin-bottom: 20px;
-  }
-  button:hover{
-    background-color: #38a;
-  }
-  
-  .float-right {
-    float: right;
-  }
-  
-  .slide{
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 100%;
-    z-index: 1;
-    opacity: 0;
-    transition: opacity 0.5s;
-  }
-  .active-slide{
-    opacity: 1;
-    z-index: 2;
-  }
-  .quiz-container{
-    position: relative;
-    height: 200px;
-    margin-top: 40px;
-  }
-
-  @media (max-width: 690px) {
-    .btn {
-      font-size: 1rem;
-      margin: 16px 0px 0px 0px;
-      padding: 10px 15px;
-    }
-  
-    #password {
-      font-size: 1rem;
-    }
-  }
-  
-  @media (max-width: 500px) {
-    .btn {
-      font-size: 0.8rem;
-    }
-  }  
+}

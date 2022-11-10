@@ -1,138 +1,101 @@
-// var list
-// var startBtn = document.querySelector("#start");
-// var quizCard = $('.card')
-// var buttonHide = $('.card-footer')
-// var nextBtn = document.querySelector("#next")
-// var questionContent = document.querySelector("#question")
-// var answerElement = $('#answers')
+// Variables
+const startButton = $("#start");
+const nextButton = $("#next");
+const previousButton = $("#previous");
+const submitButton = $("#submit");
+const quizContainer = $("#quiz");
+const resultsContainer = $("#results");
+const timeDisplay = $("#time");
+let currentSlide = 0;
+let timer;
+let count;
 
+const myQuestions = [
+  {
+    question: "Who invented JavaScript?",
+    answers: {
+      a: "Douglas Crockford",
+      b: "Sheryl Sandberg",
+      c: "Brendan Eich"
+    },
+    correctAnswer: "c"
+  },
+  {
+    question: "Which one of these is a JavaScript package manager?",
+    answers: {
+      a: "Node.js",
+      b: "TypeScript",
+      c: "npm"
+    },
+    correctAnswer: "c"
+  },
+  {
+    question: "Which tool can you use to ensure code quality?",
+    answers: {
+      a: "Angular",
+      b: "jQuery",
+      c: "RequireJS",
+      d: "ESLint"
+    },
+    correctAnswer: "d"
+  }
+];
 
-// // // start button
-// startBtn.addEventListener("click", generateQuiz)
-// nextBtn.addEventListener("click", setNextQuestion)
+// Event listeners
+submitButton.click(showResults);
+previousButton.click(showPreviousSlide);
+nextButton.click(showNextSlide);
+startButton.click(start);
 
-// // // start quiz
+// Functions
+function start() {
+  startButton.hide();
+  quizContainer.show();
+  nextButton.show();
 
-// function quizStart() {
-//     console.log('quiz started')
-//     buttonHide.hide()
-//     quizCard.show()
-//     currentQuestionIndex=0
-//     setNextQuestion()
-// }
+  // Kick things off
+  buildQuiz();
 
-// // // next question
+  // Show the first slide
+  showSlide(currentSlide);
 
-// function setNextQuestion() {
-//     console.log('setNextQuestion')
-//     resetState()
-//     showQuestion()
-//   }
+  // Setup timer
+  if(timer)
+    clearInterval(timer);
 
-// //   display questions
+  count = 10;
+  timer = setInterval(function() {
+    timeDisplay.text(count--);
+    if(count <= 0){
+      // clearInterval(timer);
+      alert("Time's Up, Game Over!!!");
+      clearInterval(timer);
+      timeDisplay.text("");
+      submitButton.hide();
+      quizContainer.hide();
+      nextButton.hide();
+      currentSlide = 0;
+      startButton.show();
 
-// function showQuestion(questionsIndex) {
-//     console.log('showQuestion')
-//     questionContent.Text = questionsIndex.question
-//     questionsIndex.answers.forEach(answers => {
-//       const button = document.createElement('button')
-//       button.innerText = answers.text
-//       button.classList.add('btn')
-//       if (answers.correct) {
-//         button.dataset.correct = answer.correct
-//       }
-//       button.addEventListener('click', selectAnswer)
-//       answerElement.appendChild(button)
-//     })
-// }
+    }
+  }, 1000);
+};
 
-//  function resetState() {
-//     console.log('resetState')
-//     clearStatusClass(document.body)
-//     buttonHide.hide()
-//     while (answerElement.firstChild) {
-//       answerElement.removeChild(answerElement.firstChild)
-//     }
-//   }
-  
-// function selectAnswer(e) {
-//     console.log("select answer")
-//     const selectedButton = e.target
-//     const correct = selectedButton.dataset.correct
-//     setStatusClass(document.body, correct)
-//     Array.from(answerElement.children).forEach(button => {
-//       setStatusClass(button, button.dataset.correct)
-//     })
-//     if (questionsIndex.length > currentQuestionIndex + 1) {
-//       buttonHide.show()
-//     } else {
-//       startBtn.innerText = 'Restart'
-//       startBtn.show()
-//     }
-//   }
-
- 
-
-//   function clearStatusClass(element) {
-//     element.classList.remove('correct')
-//     element.classList.remove('wrong')
-//   }
-
-//   function setStatusClass(element, correct) {
-//     clearStatusClass(element)
-//     if (correct) {
-//       element.classList.add('correct')
-//     } else {
-//       element.classList.add('wrong')
-//     }
-//   }
-// // questions index
-// const questionsIndex = [
-//     {
-//         question: 'What is me do for this??',
-//         answers: [
-//             {text: "all of them" , correct: false },
-//             {text: "do them good" , correct: false },
-//             {text: "food burn" , correct: true },
-//             {text: "hot koolaid" , correct: false },
-//         ]
-//     }
-// ]
-
-// // timer
-
-// var count = 60, timer = setInterval(function() {
-//     $("#time").text(count--);
-//     if(count == 1){ clearInterval(timer); 
-//     alert("Time's Up!!!");}
-// }, 1000);
-
-
-var startBtn = document.querySelector("#start");
-
-startBtn.addEventListener("click", generateQuiz)
-
-function generateQuiz(){
-  startBtn.style.display = 'none'
-  nextButton.style.display = 'inline-block';
-  // Functions
-  function buildQuiz(){
-    // variable to store the HTML output
-    const output = [];
-
-    // for each question...
-    myQuestions.forEach(
+function buildQuiz(){
+  // variable to store the HTML output
+  const output = [];
+  // for each question...
+  myQuestions.forEach(
       (currentQuestion, questionNumber) => {
 
         // variable to store the list of possible answers
         const answers = [];
 
         // and for each available answer...
-        for(letter in currentQuestion.answers){
-
+        for(let letter in currentQuestion.answers) {
           // ...add an HTML radio button
           answers.push(
-            `<label>
+              `<label>
               <input type="radio" name="question${questionNumber}" value="${letter}">
               ${letter} :
               ${currentQuestion.answers[letter]}
@@ -142,136 +105,126 @@ function generateQuiz(){
 
         // add this question and its answers to the output
         output.push(
-          `<div class="slide">
+            `<div id="slide${questionNumber}" class="slide">
             <div class="question"> ${currentQuestion.question} </div>
-            <div class="answers"> ${answers.join("")} </div>
+            <div class="answers"> ${answers.join("\r\n")} </div>
           </div>`
         );
       }
-    );
+  );
 
-    // finally combine our output list into one string of HTML and put it on the page
-    quizContainer.innerHTML = output.join('');
+  // finally combine our output list into one string of HTML and put it on the page
+  quizContainer.html(output.join("\r\n"));
+}
+
+function showResults(){
+  clearInterval(timer);
+  timeDisplay.text("")
+
+  // gather answer containers from our quiz
+  const answerContainers = quizContainer.find('.answers');
+
+  // keep track of user's answers
+  let numCorrect = 0;
+
+  // for each question...
+  myQuestions.forEach( (currentQuestion, questionNumber) => {
+
+    // find selected answer
+    const answerContainer = answerContainers[questionNumber];
+    const selector = `input[name=question${questionNumber}]:checked`;
+    const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+
+    // if answer is correct
+    if(userAnswer === currentQuestion.correctAnswer){
+      // add to the number of correct answers
+      numCorrect++;
+    }
+  });
+
+  let highScores;
+  if(localStorage.highScores) {
+    highScores = JSON.parse(localStorage.highScores)
   }
 
-  function showResults(){
+  if (highScores?.first?.score == null || numCorrect > highScores.first.score)
+  {
+    let myName = prompt("You got the high score! What are your initials?", "None");
 
-    // gather answer containers from our quiz
-    const answerContainers = quizContainer.querySelectorAll('.answers');
+    localStorage.highScores = JSON.stringify({
+      first: {initials: myName, score: numCorrect},
+      second: {initials: highScores?.first?.initials ?? "", score: highScores?.first?.score},
+      third: {initials:highScores?.second?.initials ?? "", score: highScores?.second?.score} });
+  }
+  else if (highScores.second?.score == null || numCorrect > highScores.second.score)
+  {
+    let myName = prompt("You got the high score! What are your initials?", "None");
 
-    // keep track of user's answers
-    let numCorrect = 0;
+    localStorage.highScores = JSON.stringify({
+      first: {initials: highScores.first.initials, score:  highScores.first.score},
+      second: {initials: myName, score: numCorrect},
+      third: {initials:highScores.second?.initials ?? "", score: highScores.second?.score} });
+  }
+  else if (highScores.third?.score == null || numCorrect > highScores.third.score)
+  {
+    let myName = prompt("You got the high score! What are your initials?", "None");
 
-    // for each question...
-    myQuestions.forEach( (currentQuestion, questionNumber) => {
-
-      // find selected answer
-      const answerContainer = answerContainers[questionNumber];
-      const selector = `input[name=question${questionNumber}]:checked`;
-      const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-
-      // if answer is correct
-      if(userAnswer === currentQuestion.correctAnswer){
-        // add to the number of correct answers
-        numCorrect++;
-
-        // color the answers green
-        answerContainers[questionNumber].style.color = 'lightgreen';
-      }
-      // if answer is wrong or blank
-      else{
-        // color the answers red
-        answerContainers[questionNumber].style.color = 'red';
-      }
-    });
-
-    // show number of correct answers out of total
-    resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+    localStorage.highScores = JSON.stringify({
+      first: {initials: highScores.first.initials, score:  highScores.first.score},
+      second: {initials: highScores.second.initials, score: highScores.second.score},
+      third: {initials:myName, score: numCorrect} });
   }
 
-  function showSlide(n) {
-    slides[currentSlide].classList.remove('active-slide');
-    slides[n].classList.add('active-slide');
-    currentSlide = n;
-    if(currentSlide === 0){
-      previousButton.style.display = 'none';
-    }
-    else{
-      previousButton.style.display = 'inline-block';
-    }
-    if(currentSlide === slides.length-1){
-      nextButton.style.display = 'none';
-      submitButton.style.display = 'inline-block';
-    }
-    else{
-      nextButton.style.display = 'inline-block';
-      submitButton.style.display = 'none';
-    }
+  highScores = JSON.parse(localStorage.highScores);
+
+  // show number of correct answers out of total
+  resultsContainer.html(`
+  <div>${numCorrect} out of ${myQuestions.length}.</div>
+  </br>
+  <table id="highScore">
+    <tr><th>initials</th><th>score</th></tr>
+    <tr><td>${highScores.first.initials}</td><td>${highScores.first.score ?? ""}</td></tr>
+    <tr><td>${highScores.second.initials}</td><td>${highScores.second.score ?? ""}</td></tr>
+    <tr><td>${highScores.third.initials}</td><td>${highScores.third.score ?? ""}</td></tr>
+   </table>`);
+}
+
+function showSlide(n) {
+  $(`#slide${currentSlide}`).hide();
+  $(`#slide${n}`).show();
+  currentSlide = n;
+  if(currentSlide === 0){
+    previousButton.hide();
+  }
+  else{
+    previousButton.show();
+  }
+  if(currentSlide === myQuestions.length-1){
+    nextButton.hide();
+    submitButton.show();
+  }
+  else{
+    nextButton.show();
+    submitButton.hide();
+  }
+}
+
+function showNextSlide() {
+  // gather answer containers from our quiz
+  const answerContainers = quizContainer.find('.answers');
+
+  // find selected answer
+  const answerContainer = answerContainers[currentSlide];
+  const selector = `input[name=question${currentSlide}]:checked`;
+  const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+
+  if (userAnswer !== myQuestions[currentSlide].correctAnswer) {
+    count -= 3;
   }
 
-  function showNextSlide() {
-    showSlide(currentSlide + 1);
-  }
+  showSlide(currentSlide + 1);
+}
 
-  function showPreviousSlide() {
-    showSlide(currentSlide - 1);
-  }
-
-  // Variables
-  const quizContainer = document.getElementById('quiz');
-  const resultsContainer = document.getElementById('results');
-  const submitButton = document.getElementById('submit');
-  const myQuestions = [
-    {
-      question: "Who invented JavaScript?",
-      answers: {
-        a: "Douglas Crockford",
-        b: "Sheryl Sandberg",
-        c: "Brendan Eich"
-      },
-      correctAnswer: "c"
-    },
-    {
-      question: "Which one of these is a JavaScript package manager?",
-      answers: {
-        a: "Node.js",
-        b: "TypeScript",
-        c: "npm"
-      },
-      correctAnswer: "c"
-    },
-    {
-      question: "Which tool can you use to ensure code quality?",
-      answers: {
-        a: "Angular",
-        b: "jQuery",
-        c: "RequireJS",
-        d: "ESLint"
-      },
-      correctAnswer: "d"
-    }
-  ];
-
-  // Kick things off
-  buildQuiz();
-
-  // Pagination
-  const previousButton = document.getElementById("previous");
-  const nextButton = document.getElementById("next");
-  const slides = document.querySelectorAll(".slide");
-  let currentSlide = 0;
-
-  // Show the first slide
-  showSlide(currentSlide);
-
-  // Event listeners
-  submitButton.addEventListener('click', showResults);
-  previousButton.addEventListener("click", showPreviousSlide);
-  nextButton.addEventListener("click", showNextSlide);
-})();
-
-var count = 60, timer = setInterval(function() {
-    $("#time").text(count--);
-    if(count == 1){ clearInterval(timer); 
-    alert("Time's Up!!!");}
-}, 1000);
+function showPreviousSlide() {
+  showSlide(currentSlide - 1);
+}
