@@ -63,7 +63,7 @@ function start() {
   if(timer)
     clearInterval(timer);
 
-  count = 10;
+  count = 30;
   timer = setInterval(function() {
     timeDisplay.text(count--);
     if(count <= 0){
@@ -219,7 +219,7 @@ function showNextSlide() {
   const userAnswer = (answerContainer.querySelector(selector) || {}).value;
 
   if (userAnswer !== myQuestions[currentSlide].correctAnswer) {
-    count -= 3;
+    count -= 5;
   }
 
   showSlide(currentSlide + 1);
